@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+    <code>ocbrasil_modification_checkout</code>
+    <name>ocbrasil_modification_checkout</name>
+    <version>1.0.0</version>
+    <author>Carlos Lorenzon</author>
+
+    <!-- Cart total wheight -->
+    <file path="catalog/view/theme/default/template/checkout/cart.twig">
+        <operation>
+            <search><![CDATA[{% for total in totals %}]]></search>
+            <add position="before">
+                <![CDATA[
+                    {% if weight %}
+                    <tr>
+                    <td class="text-right"><strong>{% if total.wight %} {{ total.wight }}{% else %}Peso{% endif %}:</strong></td>
+                    <td class="text-right">{{ weight }}</td>
+                    </tr>
+                    {% endif %}
+                ]]>
+            </add>
+        </operation>
+
+        <operation>
+            <search><![CDATA[<h1>{{ heading_title }}]]></search>
+            <add position="replace" offset="3">
+            <![CDATA[
+                <h1>{{ heading_title }}</h1>
+            ]]>
+            </add>
+        </operation>
+	</file>
+
+    <!-- Carrinho com frete somente informando CEP -->
+    <file path="catalog/view/theme/default/template/extension/total/shipping.twig">
+        <operation>
+            <search index="0"><![CDATA[<p>{{ text_shipping }}</p>]]></search>
+            <add position="replace" offset="31">
+            <![CDATA[
+                <p>{{ text_shipping }}</p>
+                <div class="form-group required">
+                    <label class="col-sm-2 control-label" for="input-postcode">{{ entry_postcode }}</label>
+                    <div class="input-group">
+                        <input type="text" name="postcode" value="{{ postcode }}" placeholder="{{ entry_postcode }}" id="input-postcode" class="form-control" />
+			            <span class="input-group-btn">
+        		            <input type="button" value="{{ button_quote }}" id="button-quote" data-loading-text="{{ text_loading }}" class="btn btn-primary">
+        	            </span>
+                    </div>      
+    	        </div>
+            ]]>
+            </add>
+        </operation>
+	</file>
+</modification>
